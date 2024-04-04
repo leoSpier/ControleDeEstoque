@@ -1,0 +1,22 @@
+create table clientes_fornecedores (
+	id integer NOT NULL,
+	nome character varying(255) NOT NULL,
+	cpf_cnpj character varying(20) NOT NULL,
+	tipo character(1) NOT NULL,
+	status INTEGER DEFAULT 1 NOT NULL,
+	CONSTRAINT clientes_fornecedores_tipo_check CHECK
+	((tipo = ANY (ARRAY['F' ::bpchar, 'C'::bpchar])))
+);
+alter TABLE clientes_fornecedores OWNER TO postgres;
+
+CREATE SEQUENCE clientes_fornecedores_id_seq
+	AS integer
+	START WITH 1
+	INCREMENT BY 1
+	NO MINVALUE
+	NO MAXVALUE
+	CACHE 1;
+
+ALTER SEQUENCE clientes_fornecedores_id_seq OWNER TO postgres;
+
+ALTER SEQUENCE clientes_fornecedores_id_seq OWNED BY clientes_fornecedores.id;
